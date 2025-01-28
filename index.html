@@ -69,25 +69,11 @@
         <h1>🌍 Timezone Converter 🌍</h1>
         
         <div class="input-group">
-            <select id="fromTimezone">
-                <option value="UTC">🌐 UTC</option>
-                <option value="America/New_York">🗽 New York (EST)</option>
-                <option value="Europe/London">🇬🇧 London (GMT)</option>
-                <option value="Asia/Tokyo">🇯🇵 Tokyo (JST)</option>
-                <option value="Australia/Sydney">🇦🇺 Sydney (AEDT)</option>
-                <option value="America/Los_Angeles">🔥 Los Angeles (PST)</option>
-            </select>
+            <select id="fromTimezone"></select>
         </div>
 
         <div class="input-group">
-            <select id="toTimezone">
-                <option value="UTC">🌐 UTC</option>
-                <option value="America/New_York">🗽 New York (EST)</option>
-                <option value="Europe/London">🇬🇧 London (GMT)</option>
-                <option value="Asia/Tokyo">🇯🇵 Tokyo (JST)</option>
-                <option value="Australia/Sydney">🇦🇺 Sydney (AEDT)</option>
-                <option value="America/Los_Angeles">🔥 Los Angeles (PST)</option>
-            </select>
+            <select id="toTimezone"></select>
         </div>
 
         <button onclick="convertTime()">_Convert Time_</button>
@@ -100,12 +86,17 @@
             📅 Current Date: <span id="currentDate"></span><br>
             ⏰ Local Time: <span id="currentTime"></span>
         </p>
+
+        <div class="input-group">
+            <h3>Your Timezone:</h3>
+            <p id="userTimezone"></p>
+        </div>
     </div>
 
     <script>
         function convertTime() {
-            const from = new Date().toLocaleString('en-US', { timeZone: document.getElementById('fromTimezone').value });
-            const to = new Date().toLocaleString('en-US', { timeZone: document.getElementById('toTimezone').value });
+            const from = new Date().toLocaleString('en-GB', { timeZone: document.getElementById('fromTimezone').value, hour12: false });
+            const to = new Date().toLocaleString('en-GB', { timeZone: document.getElementById('toTimezone').value, hour12: false });
 
             const result = `🕒 Original Time (GMT): ${from}<br>
                             ➔ Converted Time: ${to}`;
@@ -120,35 +111,45 @@
                 month: 'long',
                 day: 'numeric'
             };
-            document.getElementById('currentDate').textContent = new Date().toLocaleDateString('en-US', options);
+            document.getElementById('currentDate').textContent = new Date().toLocaleDateString('en-GB', options);
             
-            document.getElementById('currentTime').textContent = new Date().toLocaleTimeString();
+            document.getElementById('currentTime').textContent = new Date().toLocaleTimeString('en-GB', { hour12: false });
         }
 
         setInterval(updateDateTime, 1000);
         updateDateTime();
 
         const timezones = [
-            '🌐 UTC', 
-            '🗽 New York (EST)', 
-            '🇬🇧 London (GMT)', 
-            '🇯🇵 Tokyo (JST)', 
-            '🇦🇺 Sydney (AEDT)', 
-            '🔥 Los Angeles (PST)'
+            { name: '🌐 UTC', value: 'UTC' },
+            { name: '🗽 New York (EST)', value: 'America/New_York' },
+            { name: '🇬🇧 London (GMT)', value: 'Europe/London' },
+            { name: '🇯🇵 Tokyo (JST)', value: 'Asia/Tokyo' },
+            { name: '🇦🇺 Sydney (AEDT)', value: 'Australia/Sydney' },
+            { name: '괌 Los Angeles (PST)', value: 'America/Los_Angeles' },
+            { name: '🌴 Honolulu (HST)', value: 'Pacific/Honolulu' },
+            { name: '🌆 Dubai (GST)', value: 'Asia/Dubai' },
+            { name: '🇮🇳 Kolkata (IST)', value: 'Asia/Kolkata' },
+            { name: '🇩🇪 Berlin (CET)', value: 'Europe/Berlin' },
+            { name: '🌍 Johannesburg (SAST)', value: 'Africa/Johannesburg' },
+            { name: '🇧🇷 São Paulo (BRT)', value: 'America/Sao_Paulo' }
         ];
 
         function populateTimezones(selectId) {
             const select = document.getElementById(selectId);
+            select.innerHTML = ''; // Clear existing options
             timezones.forEach(tz => {
                 const option = document.createElement('option');
-                option.value = tz.split(' ')[1].replace(/ \(.*\)/g, '');
-                option.textContent = tz;
+                option.value = tz.value;
+                option.textContent = tz.name;
                 select.appendChild(option);
             });
         }
 
         populateTimezones('fromTimezone');
         populateTimezones('toTimezone');
+
+        // Display user's timezone
+        document.getElementById('userTimezone').textContent = Intl.DateTimeFormat().resolvedOptions().timeZone;
     </script>
 </body>
 </html>
