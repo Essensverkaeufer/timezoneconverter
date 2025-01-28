@@ -32,7 +32,7 @@
             margin: 20px 0;
         }
 
-        select {
+        select, input {
             width: 100%;
             padding: 10px;
             border-radius: 8px;
@@ -67,7 +67,12 @@
 <body>
     <div class="container">
         <h1>🌍 Timezone Converter 🌍</h1>
-        
+
+        <div class="input-group">
+            <label for="dateInput">Enter Date and Time:</label>
+            <input type="datetime-local" id="dateInput">
+        </div>
+
         <div class="input-group">
             <select id="fromTimezone"></select>
         </div>
@@ -95,12 +100,43 @@
 
     <script>
         function convertTime() {
-            const from = new Date().toLocaleString('en-GB', { timeZone: document.getElementById('fromTimezone').value, hour12: false });
-            const to = new Date().toLocaleString('en-GB', { timeZone: document.getElementById('toTimezone').value, hour12: false });
+            const dateInput = document.getElementById('dateInput').value;
 
-            const result = `🕒 Original Time (GMT): ${from}<br>
-                            ➔ Converted Time: ${to}`;
-            
+            if (!dateInput) {
+                document.getElementById('result').innerHTML = "⚠️ Please enter a date and time.";
+                return;
+            }
+
+            const inputDate = new Date(dateInput);
+
+            const fromTimezone = document.getElementById('fromTimezone').value;
+            const toTimezone = document.getElementById('toTimezone').value;
+
+            const fromTime = new Intl.DateTimeFormat('en-GB', {
+                timeZone: fromTimezone,
+                hour12: false,
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+            }).format(inputDate);
+
+            const toTime = new Intl.DateTimeFormat('en-GB', {
+                timeZone: toTimezone,
+                hour12: false,
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+            }).format(inputDate);
+
+            const result = `🕒 Original Time (${fromTimezone}): ${fromTime}<br>
+                            ➔ Converted Time (${toTimezone}): ${toTime}`;
+
             document.getElementById('result').innerHTML = result;
         }
 
@@ -112,7 +148,7 @@
                 day: 'numeric'
             };
             document.getElementById('currentDate').textContent = new Date().toLocaleDateString('en-GB', options);
-            
+
             document.getElementById('currentTime').textContent = new Date().toLocaleTimeString('en-GB', { hour12: false });
         }
 
@@ -148,7 +184,6 @@
         populateTimezones('fromTimezone');
         populateTimezones('toTimezone');
 
-        // Display user's timezone
         document.getElementById('userTimezone').textContent = Intl.DateTimeFormat().resolvedOptions().timeZone;
     </script>
 </body>
