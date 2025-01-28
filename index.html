@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌍 Timezone Converter 🌍</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(45deg, #87CEEB, #E0FFFF);
+            color: white;
+            margin: 20px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            margin: 20px 0;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 16px;
+            margin: 10px 0;
+        }
+
+        button {
+            background-color: #3498DB;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #2980B9;
+            transform: scale(1.05);
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌍 Timezone Converter 🌍</h1>
+        
+        <div class="input-group">
+            <select id="fromTimezone">
+                <option value="UTC">🌐 UTC</option>
+                <option value="America/New_York">🗽 New York (EST)</option>
+                <option value="Europe/London">🇬🇧 London (GMT)</option>
+                <option value="Asia/Tokyo">🇯🇵 Tokyo (JST)</option>
+                <option value="Australia/Sydney">🇦🇺 Sydney (AEDT)</option>
+                <option value="America/Los_Angeles">🔥 Los Angeles (PST)</option>
+            </select>
+        </div>
+
+        <div class="input-group">
+            <select id="toTimezone">
+                <option value="UTC">🌐 UTC</option>
+                <option value="America/New_York">🗽 New York (EST)</option>
+                <option value="Europe/London">🇬🇧 London (GMT)</option>
+                <option value="Asia/Tokyo">🇯🇵 Tokyo (JST)</option>
+                <option value="Australia/Sydney">🇦🇺 Sydney (AEDT)</option>
+                <option value="America/Los_Angeles">🔥 Los Angeles (PST)</option>
+            </select>
+        </div>
+
+        <button onclick="convertTime()">_Convert Time_</button>
+
+        <div class="result" id="result">
+            🕒 Result will appear here...
+        </div>
+
+        <p style="margin-top: 20px;">
+            📅 Current Date: <span id="currentDate"></span><br>
+            ⏰ Local Time: <span id="currentTime"></span>
+        </p>
+    </div>
+
+    <script>
+        function convertTime() {
+            const from = new Date().toLocaleString('en-US', { timeZone: document.getElementById('fromTimezone').value });
+            const to = new Date().toLocaleString('en-US', { timeZone: document.getElementById('toTimezone').value });
+
+            const result = `🕒 Original Time (GMT): ${from}<br>
+                            ➔ Converted Time: ${to}`;
+            
+            document.getElementById('result').innerHTML = result;
+        }
+
+        function updateDateTime() {
+            const options = { 
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            };
+            document.getElementById('currentDate').textContent = new Date().toLocaleDateString('en-US', options);
+            
+            document.getElementById('currentTime').textContent = new Date().toLocaleTimeString();
+        }
+
+        setInterval(updateDateTime, 1000);
+        updateDateTime();
+
+        const timezones = [
+            '🌐 UTC', 
+            '🗽 New York (EST)', 
+            '🇬🇧 London (GMT)', 
+            '🇯🇵 Tokyo (JST)', 
+            '🇦🇺 Sydney (AEDT)', 
+            '🔥 Los Angeles (PST)'
+        ];
+
+        function populateTimezones(selectId) {
+            const select = document.getElementById(selectId);
+            timezones.forEach(tz => {
+                const option = document.createElement('option');
+                option.value = tz.split(' ')[1].replace(/ \(.*\)/g, '');
+                option.textContent = tz;
+                select.appendChild(option);
+            });
+        }
+
+        populateTimezones('fromTimezone');
+        populateTimezones('toTimezone');
+    </script>
+</body>
+</html>
