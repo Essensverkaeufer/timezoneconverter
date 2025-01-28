@@ -3,7 +3,7 @@
 A simple web app to convert time between different timezones. Enter a date and time, choose the source and target timezones, and see the converted result.
 
 **Features**
-- Convert time between multiple timezones.
+- Convert time between timezones.
 - View current date and time in your local timezone.
 - Easy-to-use interface with a gradient background.
 - Real-time display of your timezone.
