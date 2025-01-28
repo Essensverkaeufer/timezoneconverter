@@ -1,21 +1,21 @@
-**Timezone Converter 🌍**
+# **Timezone Converter 🌍**
 
 A simple web app to convert time between different timezones. Enter a date and time, choose the source and target timezones, and see the converted result.
 
-**Features**
+### **Features**
 - Convert time between timezones.
 - View current date and time in your local timezone.
 - Easy-to-use interface with a gradient background.
 - Real-time display of your timezone.
   
-**Usage**
+### **Usage**
 
 1. Open the `index.html` file in a browser.
 2. Enter the desired date and time in the input field.
 3. Select the timezone to convert from and to.
 4. Click the "Convert Time" button to see the result.
 
-**Available Timezones**
+### **Available Timezones**
 - UTC
 - New York (EST)
 - London (GMT)
@@ -29,10 +29,10 @@ A simple web app to convert time between different timezones. Enter a date and t
 - Johannesburg (SAST)
 - São Paulo (BRT)
 
-**Installation**
+### **Installation**
 
 Simply download the `index.html` file and open it in any modern browser.
 
-**License**
+#### **License**
 
 This project is open source and available under the [MIT License](LICENSE).
