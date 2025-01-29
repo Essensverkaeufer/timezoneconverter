@@ -35,4 +35,4 @@ Simply download the `index.html` file and open it in any modern browser.
 
 #### **License**
 
-This project is open source and available under the [MIT License](LICENSE).
+This project is open source and available under the [GPL-3.0 license](LICENSE).
