@@ -74,14 +74,16 @@
         </div>
 
         <div class="input-group">
+            <label for="fromTimezone">From Timezone:</label>
             <select id="fromTimezone"></select>
         </div>
 
         <div class="input-group">
+            <label for="toTimezone">To Timezone:</label>
             <select id="toTimezone"></select>
         </div>
 
-        <button onclick="convertTime()">_Convert Time_</button>
+        <button onclick="convertTime()">Convert Time</button>
 
         <div class="result" id="result">
             🕒 Result will appear here...
@@ -108,7 +110,6 @@
             }
 
             const inputDate = new Date(dateInput);
-
             const fromTimezone = document.getElementById('fromTimezone').value;
             const toTimezone = document.getElementById('toTimezone').value;
 
@@ -148,7 +149,6 @@
                 day: 'numeric'
             };
             document.getElementById('currentDate').textContent = new Date().toLocaleDateString('en-GB', options);
-
             document.getElementById('currentTime').textContent = new Date().toLocaleTimeString('en-GB', { hour12: false });
         }
 
@@ -161,7 +161,6 @@
             { name: '🇬🇧 London (GMT)', value: 'Europe/London' },
             { name: '🇯🇵 Tokyo (JST)', value: 'Asia/Tokyo' },
             { name: '🇦🇺 Sydney (AEDT)', value: 'Australia/Sydney' },
-            { name: '괌 Los Angeles (PST)', value: 'America/Los_Angeles' },
             { name: '🌴 Honolulu (HST)', value: 'Pacific/Honolulu' },
             { name: '🌆 Dubai (GST)', value: 'Asia/Dubai' },
             { name: '🇮🇳 Kolkata (IST)', value: 'Asia/Kolkata' },
@@ -172,7 +171,7 @@
 
         function populateTimezones(selectId) {
             const select = document.getElementById(selectId);
-            select.innerHTML = ''; // Clear existing options
+            select.innerHTML = ''; 
             timezones.forEach(tz => {
                 const option = document.createElement('option');
                 option.value = tz.value;
@@ -184,7 +183,9 @@
         populateTimezones('fromTimezone');
         populateTimezones('toTimezone');
 
-        document.getElementById('userTimezone').textContent = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        const userTz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        document.getElementById('userTimezone').textContent = userTz;
+        document.getElementById('fromTimezone').value = userTz;
     </script>
 </body>
 </html>
